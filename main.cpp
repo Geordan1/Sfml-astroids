@@ -162,6 +162,7 @@ int main() {
     bool ongame = false;
     Button homeButton;
     homeButton.init(450, 400, 100, 50);
+    int high_score = 0;
     for (int i = 0; i < num; i++) {
         astroids.push_back(new astroid);
         astroids[astroids.size()-1] -> init(i*200, 200, -4 + (std::rand() % 8),  -4 + (std::rand() % 8));
@@ -245,12 +246,11 @@ int main() {
             int frame_counter = 0;
             bullets.clear();
             astroids.clear();
-            //std::vector<Bullet*> bullets;
-            //bullets.reserve(10);
-            //std::vector<astroid*> astroids;
-            //astroids.reserve(10);
             more = 0;
-            int score = 0;
+            if (score > high_score) {
+                high_score = score;
+            }
+            score = 0;
             for (int i = 0; i < num; i++) {
                 astroids.push_back(new astroid);
                 astroids[astroids.size()-1] -> init(i*200, 200, -4 + (std::rand() % 8),  -4 + (std::rand() % 8));
@@ -287,6 +287,12 @@ int main() {
             text.setFillColor(sf::Color(255,255,255));
             text.setCharacterSize(100);
             text.setPosition(sf::Vector2f(200, 50));
+            window.draw(text);
+            text.setFont(font);
+            text.setString("High Score: " + std::to_string(high_score));
+            text.setFillColor(sf::Color(255,255,255));
+            text.setCharacterSize(50);
+            text.setPosition(sf::Vector2f(240, 300));
             window.draw(text);
             window.display();
         }
